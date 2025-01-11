@@ -1,12 +1,40 @@
 services:
   chat-tutor:
     container_name: chat-tutor
+    profiles:
+      - production
     restart: unless-stopped
     build:
       context: ./
       dockerfile: Dockerfile
     ports:
       - 3012:3012
+    depends_on:
+      - chat-db
+    networks:
+      - app-network
+
+  chat-tutor-dev:
+    container_name: chat-tutor-dev
+    profiles:
+      - dev
+    restart: unless-stopped
+    build:
+      context: ./
+      dockerfile: Dockerfile.dev
+    ports:
+      - 3000:3000
+    volumes:
+      - ./prisma:/app/prisma
+    develop:
+      watch:
+        - action: sync
+          path: ./src
+          target: /app/src
+        - action: rebuild
+          path: ./package.json
+    depends_on:
+      - chat-db
     networks:
       - app-network
 
