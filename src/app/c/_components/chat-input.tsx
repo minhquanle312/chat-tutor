@@ -3,9 +3,10 @@
 import { Button } from '@/components/ui/button'
 import { Ellipsis, FilmIcon, SendHorizonal, TypeIcon } from 'lucide-react'
 import { createMessageAction } from '../_actions/create-message-action'
-import { useState } from 'react'
+import { useActionState, useState } from 'react'
 import { $Enums } from '@prisma/client'
 import { createChatAction } from '../_actions/create-chat-action'
+import { useFormStatus } from 'react-dom'
 
 interface ChatInputProps {
   chatId?: string
@@ -14,6 +15,20 @@ interface ChatInputProps {
 export const ChatInput: React.FC<ChatInputProps> = ({ chatId }) => {
   const [showSelectedType, setShowSelectedType] = useState<boolean>(false)
   const [selectedType, setSelectedType] = useState<$Enums.MessageType>('text')
+
+  const { pending } = useFormStatus()
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_state, formAction] = useActionState(
+    chatId
+      ? createMessageAction.bind(null, { chatId, type: selectedType })
+      : createChatAction.bind(null, { type: selectedType }),
+    {
+      message: '',
+      status: '',
+    }
+  )
+  console.log('🚀 ~ _state:', _state)
 
   const toggleShowSelectedType = () => {
     setShowSelectedType((prev) => !prev)
@@ -24,14 +39,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ chatId }) => {
   }
 
   return (
-    <form
-      className="flex flex-wrap w-full flex-none gap-2"
-      action={
-        chatId
-          ? createMessageAction.bind(null, { chatId, type: selectedType })
-          : createChatAction.bind(null, { type: selectedType })
-      }
-    >
+    <form className="flex flex-wrap w-full flex-none gap-2" action={formAction}>
       <div className="flex flex-col items-stretch flex-1 gap-2 rounded-md border border-input px-2 py-1 focus-within:outline-none focus-within:ring-1 focus-within:ring-ring lg:gap-4">
         <div className="flex flex-1">
           <Button
@@ -81,7 +89,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ chatId }) => {
           </div>
         )}
       </div>
-      <Button className="h-full sm:hidden">
+      <Button className="h-full sm:hidden" disabled={pending}>
         <SendHorizonal size={18} /> Send
       </Button>
     </form>

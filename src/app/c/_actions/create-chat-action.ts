@@ -7,11 +7,18 @@ import { redirect } from 'next/navigation'
 
 export const createChatAction = async (
   { type }: { type: $Enums.MessageType },
+  _prevState: {
+    message: string
+  },
   formData: FormData
-) => {
+): Promise<{ status: string; message: string }> => {
   const message = formData.get('message') as string
 
-  if (!message) return
+  if (!message)
+    return {
+      status: 'error',
+      message: 'Message can not be empty',
+    }
 
   const newChat = await createChat(message)
 
