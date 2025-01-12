@@ -5,9 +5,10 @@ import { Ellipsis, FilmIcon, SendHorizonal, TypeIcon } from 'lucide-react'
 import { createMessageAction } from '../_actions/create-message-action'
 import { useState } from 'react'
 import { $Enums } from '@prisma/client'
+import { createChatAction } from '../_actions/create-chat-action'
 
 interface ChatInputProps {
-  chatId: string
+  chatId?: string
 }
 
 export const ChatInput: React.FC<ChatInputProps> = ({ chatId }) => {
@@ -25,7 +26,11 @@ export const ChatInput: React.FC<ChatInputProps> = ({ chatId }) => {
   return (
     <form
       className="flex flex-wrap w-full flex-none gap-2"
-      action={createMessageAction.bind(null, { chatId, type: selectedType })}
+      action={
+        chatId
+          ? createMessageAction.bind(null, { chatId, type: selectedType })
+          : createChatAction.bind(null, { type: selectedType })
+      }
     >
       <div className="flex flex-col items-stretch flex-1 gap-2 rounded-md border border-input px-2 py-1 focus-within:outline-none focus-within:ring-1 focus-within:ring-ring lg:gap-4">
         <div className="flex flex-1">
