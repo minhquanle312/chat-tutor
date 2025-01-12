@@ -7,6 +7,7 @@ export async function POST(request: Request) {
   //   status: 201,
   // })
   try {
+    console.log('🚀 ~ POST ~ request:', request)
     const text = await request.text()
     console.log('🚀 ~ POST ~ text:', text)
     // Process the webhook payload

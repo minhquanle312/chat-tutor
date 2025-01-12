@@ -16,7 +16,8 @@ export const createMessageAction = async (
   await createMessage({ chatId, content: message, type })
 
   if (type === 'video') {
-    await sendGenerateVideoRequest(message)
+    const response = await sendGenerateVideoRequest(message)
+    console.log('🚀 ~ response:', response)
   }
 
   revalidatePath(`/c/${chatId}`)
