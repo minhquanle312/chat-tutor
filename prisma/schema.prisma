@@ -20,11 +20,13 @@ model User {
 }
 
 model Chat {
-  id        String   @id @default(uuid(7))
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String    @id @default(uuid(7))
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  title     String
   userId    String?
-  user      User?    @relation(fields: [userId], references: [id])
+  user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages  Message[]
 
   @@map("chat")
 }
@@ -47,6 +49,8 @@ model Message {
   sender    MessageSender
   content   String
   type      MessageType   @default(text)
+  chatId    String
+  chat      Chat          @relation(fields: [chatId], references: [id])
 
   @@map("message")
 }

@@ -10,16 +10,17 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
+import { getManyChats } from '@/services/chat.service'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
-const MOCK_CHAT_LIST: Array<{ title: string; id: string }> = [
-  { title: 'conversation 1', id: '001' },
-  { title: 'conversation 2', id: '002' },
-  { title: 'conversation 3', id: '003' },
-  { title: 'conversation 4', id: '004' },
-]
+interface AppSidebarProps {
+  chats: Awaited<ReturnType<typeof getManyChats>>
+}
 
-export const AppSidebar = () => {
+export const AppSidebar: React.FC<AppSidebarProps> = ({ chats }) => {
+  const pathname = usePathname()
+
   return (
     <Sidebar>
       <SidebarContent>
@@ -27,12 +28,11 @@ export const AppSidebar = () => {
           <SidebarGroupLabel>Chat list</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {MOCK_CHAT_LIST.map((item) => (
+              {chats.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
                     asChild
-                    // TODO: handle later
-                    // isActive
+                    isActive={pathname.split('/c/')[1] === item.id}
                   >
                     <Link href={`/c/${item.id}`}>{item.title}</Link>
                   </SidebarMenuButton>

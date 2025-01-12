@@ -1,46 +1,48 @@
-'use client'
+import { cn } from '@/lib/utils'
+import { getManyMessages } from '@/services/message.service'
+import { ChatInput } from '../_components/chat-input'
+import React from 'react'
 
-import { Button } from '@/components/ui/button'
-import { SendHorizonal } from 'lucide-react'
-import { useState } from 'react'
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ chatId: string }>
+}) {
+  const chatId = (await params).chatId
 
-interface ChatMessage {
-  message: string
-  type: 'answer' | 'question'
-  id: number
-}
-
-export default function Page() {
-  const [messageList, setMessageList] = useState<Array<ChatMessage>>(() => [
-    { id: 1, message: 'I have a message', type: 'question' },
-    { id: 2, message: 'What do you want', type: 'answer' },
-  ])
+  const messages = await getManyMessages(chatId)
 
   return (
-    <div>
-      <div className="bg-gray-400 mb-6">
-        {messageList.map((item) => (
-          <div key={item.id}>{item.message}</div>
-        ))}
-      </div>
-      <form className="flex w-full flex-none gap-2">
-        <div className="flex flex-1 items-center gap-2 rounded-md border border-input px-2 py-1 focus-within:outline-none focus-within:ring-1 focus-within:ring-ring lg:gap-4">
-          <label className="flex-1">
-            <span className="sr-only">Chat Text Box</span>
-            <input
-              type="text"
-              placeholder="Type your messages..."
-              className="h-8 w-full bg-inherit focus-visible:outline-none"
-            />
-          </label>
-          <Button variant="ghost" size="icon" className="hidden sm:inline-flex">
-            <SendHorizonal size={20} />
-          </Button>
+    <>
+      <div className="flex-1 relative -mr-4">
+        <div className="absolute inset-0 overflow-y-scroll flex flex-col-reverse gap-4 pr-4">
+          {messages.map((item) => (
+            <React.Fragment key={item.id}>
+              {item.sender === 'bot' && item.type === 'video' ? (
+                <div className="rounded-md bg-muted self-start">
+                  <video width="400" controls className="rounded-t-md">
+                    <source src={item.content} type="video/mp4" />
+                    The video URL has expired
+                  </video>
+                  <div className="p-2">
+                    The video URL will be expired in 30 minutes
+                  </div>
+                </div>
+              ) : (
+                <div
+                  className={cn(
+                    'rounded bg-muted p-2 max-w-[75%]',
+                    item.sender === 'user' ? 'self-end' : 'self-start'
+                  )}
+                >
+                  {item.content}
+                </div>
+              )}
+            </React.Fragment>
+          ))}
         </div>
-        <Button className="h-full sm:hidden">
-          <SendHorizonal size={18} /> Send
-        </Button>
-      </form>
-    </div>
+      </div>
+      <ChatInput chatId={chatId} />
+    </>
   )
 }
