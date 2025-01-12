@@ -15,6 +15,7 @@ export async function POST(request: Request) {
       status: 200,
     })
   } catch (error) {
+    console.log('🚀 ~ POST ~ error:', error)
     if (error instanceof Error)
       return new Response(`Webhook error: ${error.message}`, {
         status: 400,
