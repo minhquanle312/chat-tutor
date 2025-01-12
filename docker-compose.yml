@@ -9,8 +9,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - 3012:3012
-    depends_on:
-      - chat-db
+    # depends_on:
+    #   - chat-db-production
     networks:
       - app-network
 
@@ -53,23 +53,6 @@ services:
       POSTGRES_DB: ${DATABASE_NAME}
     volumes:
       - ../volumes/postgres:/var/lib/postgresql/data
-    networks:
-      - app-network
-
-  chat-db-production:
-    container_name: chat-db-production
-    restart: unless-stopped
-    image: postgres:17
-    profiles:
-      - production
-    ports:
-      - 5440:5432
-    environment:
-      POSTGRES_USER: ${DATABASE_USERNAME}
-      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
-      POSTGRES_DB: ${DATABASE_NAME}
-    volumes:
-      - ../volumes/postgres-prod:/var/lib/postgresql/data
     networks:
       - app-network
 

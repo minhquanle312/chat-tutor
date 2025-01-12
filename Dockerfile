@@ -14,6 +14,8 @@ RUN yarn
 
 COPY . .
 
+RUN npx prisma generate
+
 RUN yarn build
 
 EXPOSE 3012
