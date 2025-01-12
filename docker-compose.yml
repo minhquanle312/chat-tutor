@@ -44,7 +44,6 @@ services:
     restart: unless-stopped
     image: postgres:17
     profiles:
-      - production
       - dev
     ports:
       - 5440:5432
@@ -54,6 +53,23 @@ services:
       POSTGRES_DB: ${DATABASE_NAME}
     volumes:
       - ../volumes/postgres:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  chat-db-production:
+    container_name: chat-db-production
+    restart: unless-stopped
+    image: postgres:17
+    profiles:
+      - production
+    ports:
+      - 5440:5432
+    environment:
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    volumes:
+      - ../volumes/postgres-prod:/var/lib/postgresql/data
     networks:
       - app-network
 
