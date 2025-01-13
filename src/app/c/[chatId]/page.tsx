@@ -1,10 +1,10 @@
 import { cn } from '@/lib/utils'
-import { getManyMessages } from '@/services/message.service'
-import { ChatInput } from '../_components/chat-input'
-import React from 'react'
-import { VideoMessageResponse } from '../_components/video-message-response'
-import { Metadata, ResolvingMetadata } from 'next'
 import { getChatTitle } from '@/services/chat.service'
+import { getManyMessages } from '@/services/message.service'
+import { Metadata } from 'next'
+import React from 'react'
+import { ChatInput } from '../_components/chat-input'
+import { VideoMessageResponse } from '../_components/video-message-response'
 
 type Props = {
   params: Promise<{ chatId: string }>
