@@ -116,3 +116,11 @@ DATABASE_URL="postgresql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_
 #### Chat UI demo
 
 ![Chat UI demo](public/assets/images/chat-UI.png)
+
+#### Video demo
+
+[![Video Title](https://img.youtube.com/vi/kbxqbQwdnn0/0.jpg)](https://www.youtube.com/watch?v=kbxqbQwdnn0)
+
+---
+
+### Website demo: [chat.minhquanle.com](https://chat.minhquanle.com) - This might not work correctly due to the token limit.
