@@ -113,9 +113,25 @@ DATABASE_URL="postgresql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_
   - If response status is `in_progress` => interval call each 15 seconds (show typing animation)
   - If response status is `completed` => clearInterval and show video player
 
+---
+
+#### Example scenario
+
+- Input: Photosynthesis (I use one word because the token usage is based on the complexity of the prompt.)
+- Output videos for the same input above:
+  - [https://ai.vadoo.tv/share/889577808670](https://ai.vadoo.tv/share/889577808670)
+  - [https://ai.vadoo.tv/share/523335747898](https://ai.vadoo.tv/share/523335747898)
+  - [https://ai.vadoo.tv/share/573026081746](https://ai.vadoo.tv/share/573026081746)
+  - [https://ai.vadoo.tv/share/671622210095](https://ai.vadoo.tv/share/671622210095)
+  - [https://ai.vadoo.tv/share/932038510547](https://ai.vadoo.tv/share/932038510547)
+
+---
+
 #### Chat UI demo
 
 ![Chat UI demo](public/assets/images/chat-UI.png)
+
+---
 
 #### Video demo
 
