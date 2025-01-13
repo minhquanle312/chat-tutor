@@ -1,6 +1,7 @@
 'use server'
 
 import { createMessage } from '@/services/message.service'
+import { openaiGenerateImage } from '@/services/openai.service'
 import { sendGenerateVideoRequest } from '@/services/vadoo.service'
 import { $Enums } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
@@ -21,6 +22,18 @@ export const createMessageAction = async (
     }
 
   await createMessage({ chatId, content: message, type, sender: 'user' })
+
+  if (type === 'image') {
+    const response = await openaiGenerateImage(message)
+    console.log('🚀 ~ response:', response)
+
+    revalidatePath(`/c/${chatId}`)
+
+    return {
+      status: 'success',
+      message: '',
+    }
+  }
 
   if (type === 'video') {
     const response = await sendGenerateVideoRequest(message)

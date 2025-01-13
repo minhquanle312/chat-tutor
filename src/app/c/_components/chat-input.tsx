@@ -95,6 +95,16 @@ export const ChatInput: React.FC<ChatInputProps> = ({ chatId }) => {
             >
               <FilmIcon size={20} /> Video
             </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              className={
+                selectedType === 'image' ? 'border-2 border-green-600' : ''
+              }
+              onClick={() => handleSelectType('image')}
+            >
+              <ImageIcon size={20} /> Image
+            </Button>
           </div>
         )}
       </div>
