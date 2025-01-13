@@ -21,7 +21,10 @@ export const sendGenerateVideoRequest = async (prompt: string) => {
 export const getVideoUrl = async (videoId: string) => {
   if (!VADOO_API_KEY || !prompt) return
 
-  const res = await axios.get(VADOO_API.GET_VIDEO_URL, {
+  const res = await axios.get<{
+    url: string
+    status: 'in_progress' | 'completed'
+  }>(VADOO_API.GET_VIDEO_URL, {
     headers: {
       'X-API-KEY': VADOO_API_KEY,
     },

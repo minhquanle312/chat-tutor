@@ -20,11 +20,26 @@ export const createMessageAction = async (
       message: 'Message can not be empty',
     }
 
-  await createMessage({ chatId, content: message, type })
+  await createMessage({ chatId, content: message, type, sender: 'user' })
 
   if (type === 'video') {
     const response = await sendGenerateVideoRequest(message)
-    console.log('🚀 ~ response:', response)
+    console.log('🚀 ~ response:', response?.data)
+
+    if (!response?.data.vid)
+      return {
+        status: 'error',
+        message: 'Generate video unsuccess',
+      }
+
+    await createMessage({
+      chatId,
+      content: 'This may be description for video later',
+      type: 'video',
+      sender: 'bot',
+      videoId: response?.data.vid,
+    })
+
     return {
       status: 'success',
       message: `vid=${response?.data.vid}`,
@@ -38,12 +53,3 @@ export const createMessageAction = async (
     message: '',
   }
 }
-
-// export const createVideoMessageResponseAction = async (
-//   { vid }: { vid: string},
-//   _prevState: {
-//     message: string
-//   },
-// ): Promise<{ status: string; message: string }> => {
-
-// }

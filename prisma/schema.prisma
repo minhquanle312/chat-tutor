@@ -51,6 +51,7 @@ model Message {
   type      MessageType   @default(text)
   chatId    String
   chat      Chat          @relation(fields: [chatId], references: [id])
+  videoId   String?
 
   @@map("message")
 }
