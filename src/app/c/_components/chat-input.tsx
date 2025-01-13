@@ -1,15 +1,21 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { Ellipsis, FilmIcon, SendHorizonal, TypeIcon } from 'lucide-react'
-import { createMessageAction } from '../_actions/create-message-action'
-import { useActionState, useState } from 'react'
 import { $Enums } from '@prisma/client'
-import { createChatAction } from '../_actions/create-chat-action'
+import { FilmIcon, ImageIcon, SendHorizonal, TypeIcon } from 'lucide-react'
+import React, { useActionState, useState } from 'react'
 import { useFormStatus } from 'react-dom'
+import { createChatAction } from '../_actions/create-chat-action'
+import { createMessageAction } from '../_actions/create-message-action'
 
 interface ChatInputProps {
   chatId?: string
+}
+
+const ICON_MESSAGE_TYPE: Record<$Enums.MessageType, React.ReactNode> = {
+  text: <TypeIcon size={20} />,
+  video: <FilmIcon size={20} />,
+  image: <ImageIcon size={20} />,
 }
 
 export const ChatInput: React.FC<ChatInputProps> = ({ chatId }) => {
@@ -46,15 +52,15 @@ export const ChatInput: React.FC<ChatInputProps> = ({ chatId }) => {
             type="button"
             onClick={toggleShowSelectedType}
           >
-            <Ellipsis size={20} />
+            {ICON_MESSAGE_TYPE[selectedType]}
           </Button>
-          <label className="flex-1">
+          <label className="flex-1 ml-2">
             <span className="sr-only">Chat Text Box</span>
             <input
               type="text"
               name="message"
               placeholder="Type your messages..."
-              className="h-8 w-full bg-inherit focus-visible:outline-none"
+              className="h-8 w-full bg-inherit focus-visible:outline-none text-sm"
             />
           </label>
           <Button

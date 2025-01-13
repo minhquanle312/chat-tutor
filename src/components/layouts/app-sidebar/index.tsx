@@ -1,11 +1,11 @@
 'use client'
 
+import { Button } from '@/components/ui/button'
 import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -25,7 +25,9 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({ chats }) => {
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Chat list</SidebarGroupLabel>
+          <Link href="/c" className="mb-2">
+            <Button className="w-full">Create new chat</Button>
+          </Link>
           <SidebarGroupContent>
             <SidebarMenu>
               {chats.map((item) => (
