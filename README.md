@@ -112,3 +112,7 @@ DATABASE_URL="postgresql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_
 - Video component will call [Vadoo get video URL](https://docs.vadoo.tv/docs/guide/get-video-url) first time
   - If response status is `in_progress` => interval call each 15 seconds (show typing animation)
   - If response status is `completed` => clearInterval and show video player
+
+#### Chat UI demo
+
+![Chat UI demo](public/assets/images/chat-UI.png)
