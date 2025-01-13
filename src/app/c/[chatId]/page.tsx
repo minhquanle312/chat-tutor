@@ -2,6 +2,7 @@ import { cn } from '@/lib/utils'
 import { getManyMessages } from '@/services/message.service'
 import { ChatInput } from '../_components/chat-input'
 import React from 'react'
+import { VideoMessageResponse } from '../_components/video-message-response'
 
 export default async function Page({
   params,
@@ -19,16 +20,17 @@ export default async function Page({
           {messages.map((item) => (
             <React.Fragment key={item.id}>
               {item.sender === 'bot' && item.type === 'video' ? (
-                <div className="rounded-md bg-muted self-start">
-                  <video width="400" controls className="rounded-t-md">
-                    <source src={item.content} type="video/mp4" />
-                    The video URL has expired
-                  </video>
-                  <div className="p-2">
-                    The video URL will be expired in 30 minutes
-                  </div>
-                </div>
+                <VideoMessageResponse data={item} />
               ) : (
+                // <div className="rounded-md bg-muted self-start">
+                //   <video width="400" controls className="rounded-t-md">
+                //     <source src={item.content} type="video/mp4" />
+                //     The video URL has expired
+                //   </video>
+                //   <div className="p-2">
+                //     The video URL will be expired in 30 minutes
+                //   </div>
+                // </div>
                 <div
                   className={cn(
                     'rounded bg-muted p-2 max-w-[75%]',

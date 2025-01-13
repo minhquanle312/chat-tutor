@@ -24,7 +24,6 @@ export const createMessageAction = async (
 
   if (type === 'video') {
     const response = await sendGenerateVideoRequest(message)
-    console.log('🚀 ~ response:', response?.data)
 
     if (!response?.data.vid)
       return {
@@ -32,17 +31,23 @@ export const createMessageAction = async (
         message: 'Generate video unsuccess',
       }
 
-    await createMessage({
-      chatId,
-      content: 'This may be description for video later',
-      type: 'video',
-      sender: 'bot',
-      videoId: response?.data.vid,
-    })
+    // if (response && typeof response.data.vid === 'string') {
+    if (response && response.data.vid) {
+      await createMessage({
+        chatId,
+        content: 'This may be description for video later',
+        type: 'video',
+        sender: 'bot',
+        videoId: String(response.data.vid),
+        // videoId: '671622210095',
+      })
+    }
+
+    revalidatePath(`/c/${chatId}`)
 
     return {
       status: 'success',
-      message: `vid=${response?.data.vid}`,
+      message: '',
     }
   }
 

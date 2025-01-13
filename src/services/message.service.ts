@@ -25,9 +25,9 @@ export const createMessage = async (data: {
   videoId?: string
 }) => {
   try {
-    await prisma.message.create({ data: { ...data } })
+    const newMessage = await prisma.message.create({ data })
 
-    return { status: 'ok' }
+    return { status: 'ok', data: newMessage }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     return {

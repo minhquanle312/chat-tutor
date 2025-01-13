@@ -19,7 +19,7 @@ export const sendGenerateVideoRequest = async (prompt: string) => {
 }
 
 export const getVideoUrl = async (videoId: string) => {
-  if (!VADOO_API_KEY || !prompt) return
+  if (!VADOO_API_KEY) return
 
   const res = await axios.get<{
     url: string

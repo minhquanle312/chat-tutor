@@ -6,9 +6,15 @@ export const getVideoUrlAction = async ({
   videoId,
 }: {
   videoId: string
-}): Promise<{ status: string; message: string }> => {
+}): Promise<{
+  status: 'in_progress' | 'completed' | 'error'
+  message: string
+}> => {
   const videoURL = await getVideoUrl(videoId)
   console.log('🚀 ~ videoURL:', videoURL)
 
-  return { status: 'success', message: videoURL?.data.url || 'pending-url' }
+  return {
+    status: videoURL ? videoURL.data.status : 'error',
+    message: videoURL?.data.url || 'pending-url',
+  }
 }

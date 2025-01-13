@@ -28,8 +28,6 @@ export const ChatInput: React.FC<ChatInputProps> = ({ chatId }) => {
       status: '',
     }
   )
-  console.log('🚀 ~ _state:', _state)
-
   const toggleShowSelectedType = () => {
     setShowSelectedType((prev) => !prev)
   }
@@ -59,7 +57,12 @@ export const ChatInput: React.FC<ChatInputProps> = ({ chatId }) => {
               className="h-8 w-full bg-inherit focus-visible:outline-none"
             />
           </label>
-          <Button variant="ghost" size="icon" className="hidden sm:inline-flex">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="hidden sm:inline-flex"
+            disabled={pending}
+          >
             <SendHorizonal size={20} />
           </Button>
         </div>
