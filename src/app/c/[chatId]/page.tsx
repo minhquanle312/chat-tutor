@@ -3,12 +3,24 @@ import { getManyMessages } from '@/services/message.service'
 import { ChatInput } from '../_components/chat-input'
 import React from 'react'
 import { VideoMessageResponse } from '../_components/video-message-response'
+import { Metadata, ResolvingMetadata } from 'next'
+import { getChatTitle } from '@/services/chat.service'
 
-export default async function Page({
-  params,
-}: {
+type Props = {
   params: Promise<{ chatId: string }>
-}) {
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const chatId = (await params).chatId
+
+  const messages = await getChatTitle(chatId)
+
+  return {
+    title: messages?.title || 'Current chat',
+  }
+}
+
+export default async function Page({ params }: Props) {
   const chatId = (await params).chatId
 
   const messages = await getManyMessages(chatId)
